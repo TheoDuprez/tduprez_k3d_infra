@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: playground
+  namespace: argocd
+spec:
+  project: default
+  
+  source:
+    repoURL: https://github.com/TheoDuprez/tduprez_k3d_infra
+    targetRevision: HEAD
+    path: development
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true
